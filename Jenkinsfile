@@ -2,15 +2,19 @@ pipeline {
     agent any
 
     stages {
+        stage('Fix Git Safety') {
+            steps {
+                // Эта команда скажет Git не проверять владельца папки
+                sh 'git config --global --add safe.directory "*"'
+            }
+        }
         stage('Checkout') {
             steps {
-                echo 'Скачиваем код из GitHub...'
                 checkout scm
             }
         }
         stage('Read Python File') {
             steps {
-                echo 'Проверяем содержимое файла main.py:'
                 sh 'cat main.py'
             }
         }
